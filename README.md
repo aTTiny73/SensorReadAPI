@@ -6,9 +6,9 @@ Practice problem , testing  HTTP,JSON,REST...
 git clone https://github.com/aTTiny73/SensorReadAPI.git
 ```
 Functionality can be tested with CURL or POSTMAN.
-```
+
 JSON data format is used for this demonstration.
-```
+
 SensorValues in JSON are respresented :
 ```
 {
