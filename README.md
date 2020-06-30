@@ -19,3 +19,13 @@ SensorValues in JSON are respresented :
 
 }
 ```
+Main handlers:
+```
+http://localhost:8090/postReadings
+```
+```
+http://localhost:8090/getReadings
+```
+```
+http://localhost:8090/getReading?ID=3
+```
