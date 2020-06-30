@@ -29,3 +29,9 @@ http://localhost:8090/getReadings
 ```
 http://localhost:8090/getReading?ID=3
 ```
+```
+http://localhost:8090/updateReading?ID=3
+```
+```
+http://localhost:8090/deleteReading?ID=3
+```
