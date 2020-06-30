@@ -36,9 +36,7 @@ func getReading(w http.ResponseWriter, req *http.Request) {
 		if strconv.Itoa(v.ID) == ID {
 			bytes, _ := json.MarshalIndent(v, "", " ")
 			fmt.Fprintf(w, string(bytes))
-
-		} else {
-			fmt.Println("Id not found")
+			break
 		}
 	}
 }
@@ -54,20 +52,36 @@ func postReading(w http.ResponseWriter, req *http.Request) {
 	sensorMap[getTime()] = sensVal
 }
 
-/*func headers(w http.ResponseWriter, req *http.Request) {
-
-	for name, headers := range req.Header {
-		for _, h := range headers {
-			fmt.Fprintf(w, "%v: %v\n", name, h)
+func updateReading(w http.ResponseWriter, req *http.Request) {
+	body, _ := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	ID := req.URL.Query().Get("ID")
+	for k, v := range sensorMap {
+		if strconv.Itoa(v.ID) == ID {
+			var tmp SensorValues
+			_ = json.Unmarshal(body, &tmp)
+			sensorMap[k] = tmp
+			break
 		}
 	}
 }
-*/
+
+func deleteReading(w http.ResponseWriter, req *http.Request) {
+	ID := req.URL.Query().Get("ID")
+	for k, v := range sensorMap {
+		if strconv.Itoa(v.ID) == ID {
+			delete(sensorMap, k)
+			break
+		}
+	}
+}
 
 func main() {
 
 	http.HandleFunc("/getReadings", getReadings)
 	http.HandleFunc("/postReadings", postReading)
 	http.HandleFunc("/getReading", getReading)
+	http.HandleFunc("/updateReading", updateReading)
+	http.HandleFunc("/deleteReading", deleteReading)
 	http.ListenAndServe(":8090", nil)
 }
